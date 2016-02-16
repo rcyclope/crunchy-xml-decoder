@@ -3,6 +3,8 @@
 import sys
 import argparse
 import os
+import subprocess
+from getpass import getpass
 sys.path.append('crunchy-xml-decoder')
 import functtest
 import ultimate
