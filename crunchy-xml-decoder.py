@@ -3,16 +3,34 @@
 import sys
 import argparse
 import os
-import subprocess
-from getpass import getpass
 sys.path.append('crunchy-xml-decoder')
 import functtest
 import ultimate
 import login
 import decode
 import altfuncs
-
+import re, urllib2
+from collections import deque
 import time
+
+#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#(autocatch)#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+def autocatch():
+    print 'indicate the url : '
+    url=raw_input()
+    mykey = urllib2.urlopen(url)
+    take = open("queue_.txt", "w")
+
+    for text in mykey:
+        match = re.search('<a href="/(.+?)" title=', text)
+        if match:
+            print >> take, 'http://www.crunchyroll.com/'+match.group(1)
+
+    take.close()
+	
+    with open('queue_.txt') as f,  open('queue.txt', 'w') as fout:
+        fout.writelines(reversed(f.readlines()))
+
+    os.remove('queue_.txt')
 
 #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#(CHECKING)#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 if not os.path.exists("export"):
@@ -60,7 +78,7 @@ if not os.path.exists(".\\settings.ini"):
 if not os.path.exists(".\\cookies"):
     if raw_input(u'Do you have an account [Y/N]?').lower() == 'y':
         username = raw_input(u'Username: ')
-        password = getpass('Password(don\'t worry the password are typing but hidden:')
+        password = getpass(u'Password: ')
         login.login(username, password)
     else:
         login.login('', '')
@@ -273,6 +291,7 @@ def makechoise():
 4.- Login As Guest
 5.- Run Queue
 6.- Settings
+7.- autocatch and download Queue list
 '''
     try:
         seleccion = int(input("> "))
@@ -299,11 +318,14 @@ def makechoise():
         login.login('', '')
         makechoise()
     elif seleccion == 5 :
-        queueu('.\\queue.txt')
+	queueu('.\\queue.txt')
     elif seleccion == 6 :
         settings_()
         makechoise()
     elif seleccion == 7 :
+        autocatch()
+        queueu('.\\queue.txt')
+    elif seleccion == 8 :
         import debug
     elif seleccion == 0 :
         sys.exit()
