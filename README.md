@@ -13,8 +13,10 @@ INSTRUCTIONS:
 
     Pre-Setup (Only need to do these once.):
     1.  Install Python 2.7.5.
-    2.  Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py to generate necessary files (settings.ini and cookies)
-    3.  choices	from the option 
+    2.  Install RTMPDUMP
+    3.  Install Mkvtoolnix
+    4.  Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py to generate necessary files (settings.ini and cookies)
+    5.  choices	from the option 
 
     Per-Video Process:
     1.  Copy the URL of the CrunchyRoll video you want to download from your web browser
