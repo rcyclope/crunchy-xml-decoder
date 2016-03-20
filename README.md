@@ -12,7 +12,7 @@ that have been automated with a batch file.
 INSTRUCTIONS:
 
     Pre-Setup (Only need to do these once.):
-    1.  Install Python 2.7.5. (sudo apt-get install  python2.7 libxml2-dev libxslt1-dev python-dev )
+    1.  Install Python 2.7.5. (sudo apt-get install python2.7 libxml2-dev libxslt1-dev python-dev )
     2.  Install lxml (sudo apt-get install python-lxml or sudo easy_install lxml )
     3.  Install PyCrypto ( sudo easy_install pycrypto-2.6.1 )
     4.  Install RTMPDUMP ( sudo apt-get install rtmpdump )
