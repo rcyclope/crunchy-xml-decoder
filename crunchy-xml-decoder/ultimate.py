@@ -1,4 +1,4 @@
-﻿#!/usr/bin/python
+\ufeff#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
 Crunchyroll Export Script DX - Last Updated 2014/07/16
@@ -25,14 +25,14 @@ from unidecode import unidecode
 
 def video():
     print 'Downloading video...'
-    cmd = ['.\\video-engine\\rtmpdump',
+    cmd = ['rtmpdump',
            '-r', url1, '-a', url2,
            '-f', 'WIN 11,8,800,50',
            '-m', '15',
            '-W', 'http://static.ak.crunchyroll.com/versioned_assets/ChromelessPlayerApp.17821a0e.swf',
            '-p', page_url2,
            '-y', filen,
-           '-o', '.\\export\\{}.flv'.format(title)]
+           '-o', './export/{}.flv'.format(title)]
     error = subprocess.call(cmd)
     # error = 0
 
@@ -55,7 +55,7 @@ def video():
             log = open('error.log', 'w')
         log.write(page_url2 + '\n')
         log.close()
-        os.remove('.\\' + title + '.flv"')
+        os.remove('./' + title + '.flv"')
         sys.exit()
 
 # ----------
@@ -114,7 +114,7 @@ def subtitles(eptitle):
     sub_id3 = [word.replace('[Espanol]','spa') for word in sub_id3]
     sub_id3 = [word.replace('[Italiano]','ita') for word in sub_id3]
     sub_id3 = [word.replace('[l`rby@]','ara') for word in sub_id3]
-#    sub_id4 = [word.replace('[l`rby@]',u'[العربية]') for word in sub_id4]
+#    sub_id4 = [word.replace('[l`rby@]',u'[\u0627\u0644\u0639\u0631\u0628\u064a\u0629]') for word in sub_id4]
     sub_id4 = [word.replace('[l`rby@]',u'[Arabic]') for word in sub_id4]
     sub_id5 = [word.replace('[English (US)]','eng') for word in sub_id5]
     sub_id5 = [word.replace('[Deutsch]','deu') for word in sub_id5]
@@ -124,7 +124,7 @@ def subtitles(eptitle):
     sub_id5 = [word.replace('[Espanol]','spa') for word in sub_id5]
     sub_id5 = [word.replace('[Italiano]','ita') for word in sub_id5]
     sub_id5 = [word.replace('[l`rby@]','ara') for word in sub_id5]
-#    sub_id6 = [word.replace('[l`rby@]',u'[العربية]') for word in sub_id6]
+#    sub_id6 = [word.replace('[l`rby@]',u'[\u0627\u0644\u0639\u0631\u0628\u064a\u0629]') for word in sub_id6]
     sub_id6 = [word.replace('[l`rby@]',u'[Arabic]') for word in sub_id6]
 #    else:
 #        try:
@@ -154,7 +154,7 @@ def subtitles(eptitle):
 			xmlsub = altfuncs.getxml('RpcApiSubtitle_GetXml', i)
 			formattedsubs = CrunchyDec().returnsubs(xmlsub)
 			#subfile = open(eptitle + '.ass', 'wb')
-			subfile = open('.\\export\\'+title+'['+sub_id3.pop(0)+']'+sub_id4.pop(0)+'.ass', 'wb')
+			subfile = open('./export/'+title+'['+sub_id3.pop(0)+']'+sub_id4.pop(0)+'.ass', 'wb')
 			subfile.write(formattedsubs.encode('utf-8-sig'))
 			subfile.close()		
 			#shutil.move(eptitle + '.ass', os.path.join(os.getcwd(), 'export', ''))
@@ -209,7 +209,7 @@ Booting up...
 
     h = HTMLParser.HTMLParser()
     title = re.findall('<title>(.+?)</title>', html)[0].replace('Crunchyroll - Watch ', '')
-    if len(os.getcwd()+'\\export\\'+title+'.flv') > 255:
+    if len(os.getcwd()+'./export/'+title+'.flv') > 255:
         title = re.findall('^(.+?) \- ', title)[0]
 
     # title = h.unescape(unidecode(title)).replace('/', ' - ').replace(':', '-').
@@ -266,7 +266,7 @@ Booting up...
     else:
         page_url2 = page_url
         video()
-        #heightp = subprocess.Popen('"video-engine\MediaInfo.exe" --inform=Video;%Height% ".\export\\' + title + '.flv"' ,shell=True , stdout=subprocess.PIPE).stdout.read()
+        #heightp = subprocess.Popen('"video-engine\MediaInfo.exe" --inform=Video;%Height% "./export/' + title + '.flv"' ,shell=True , stdout=subprocess.PIPE).stdout.read()
         heightp = {'71' : 'android', '60' : '360p', '61' : '480p',
                  '62' : '720p', '80' : '1080p', '0' : 'highest'}[xmlconfig.find('video_encode_quality').string]
         subtitles(title)
@@ -276,12 +276,12 @@ Booting up...
 
         print 'Starting mkv merge'
         if hardcoded:
-            subprocess.call('"video-engine\mkvmerge.exe" -o ".\export\\' + title + '[' + heightp.strip() +'p].mkv" --language 1:jpn -a 1 -d 0 ' +
-                            '".\export\\' + title + '.flv"' +' --title "' + title +'"')
+            subprocess.call('mkvmerge -o "./export/' + title + '[' + heightp.strip() +'p].mkv" --language 1:jpn -a 1 -d 0 ' +
+                            '"./export/' + title + '.flv"' +'"')
         else:
             sublang = {u'Español (Espana)': 'spa_spa', u'Français (France)': 'fre', u'Português (Brasil)': 'por',
                        u'English': 'eng', u'Español': 'spa', u'Türkçe': 'tur', u'Italiano': 'ita',
-                       u'العربية': 'ara', u'Deutsch': 'deu'}[lang]
+                       u'\u0627\u0644\u0639\u0631\u0628\u064a\u0629': 'ara', u'Deutsch': 'deu'}[lang]
     #		defaulttrack = False
             #print lang.encode('utf-8')
             #print sub_id5
@@ -302,17 +302,17 @@ Booting up...
 	    			else:
 		    			defaultsub=' --default-track 0:no --forced-track 0:no'
 	    		if not onlymainsub:
-    				subtitlefilecode=subtitlefilecode+' --language 0:' + sublangc.replace('spa_spa','spa') + defaultsub +' --track-name 0:"' + sublangn + '" -s 0 ".\export\\'+title+'['+sublangc+']'+sublangn+'.ass"'
+    				subtitlefilecode=subtitlefilecode+' --language 0:' + sublangc.replace('spa_spa','spa') + defaultsub +' --track-name 0:"' + sublangn + '" -s 0 "./export/'+title+'['+sublangc+']'+sublangn+'.ass"'
 	    		else:
     				if sublangc == sublang:
-	    				subtitlefilecode=subtitlefilecode+' --language 0:' + sublangc.replace('spa_spa','spa') + defaultsub +' --track-name 0:"' + sublangn + '" -s 0 ".\export\\'+title+'['+sublangc+']'+sublangn+'.ass"'
-    #        subprocess.call('"video-engine\mkvmerge.exe" -o ".\export\\' + title + '.mkv" --language 1:jpn -a 1 -d 0 ' +
+	    				subtitlefilecode=subtitlefilecode+' --language 0:' + sublangc.replace('spa_spa','spa') + defaultsub +' --track-name 0:"' + sublangn + '" -s 0 "./export/'+title+'['+sublangc+']'+sublangn+'.ass"'
+    #        subprocess.call('"mkvmerge" -o ".\export\' + title + '.mkv" --language 1:jpn -a 1 -d 0 ' +
     #                        '".\export\\' + title + '.flv" --language 0:' + sublang + ' -s 0 ".\export\\'+title+'.ass"')
-    #        print '"video-engine\mkvmerge.exe" -o ".\export\\' + title + '.mkv" --language 0:jpn --language 1:jpn -a 1 -d 0 ' + '".\export\\' + title + '.flv"' + subtitlefilecode +' --title "' + title +'"'
-            mkvcmd='"video-engine\mkvmerge.exe" -o ".\export\\' + title + '[' + heightp.strip() +'].mkv" --language 0:jpn --language 1:jpn -a 1 -d 0 ' + '".\export\\' + title + '.flv"' + subtitlefilecode +' --title "' + title +'"'
-    #        print mkvcmd
+    #        print '"mkvmerge" -o ".\export\\' + title + '.mkv" --language 0:jpn --language 1:jpn -a 1 -d 0 ' + '".\export\\' + title + '.flv"' + subtitlefilecode +' --title "' + title +'"'
+            mkvcmd='mkvmerge -o "./export/' + title + '[' + heightp.strip() +'].mkv" --language 0:jpn --language 1:jpn -a 1 -d 0 ' + '"./export/' + title + '.flv"' + subtitlefilecode +' --title "' + title +'"'
+            #print mkvcmd
             #print subtitlefilecode
-            subprocess.call(mkvcmd)
+            os.system(mkvcmd)
         print 'Merge process complete'
         subs_only = False
 
