@@ -28,10 +28,9 @@ def autocatch():
             print >> take, 'http://www.crunchyroll.com/'+match.group(1)
 
     take.close()
-	
+  
     with open('queue_.txt') as f,  open('queue.txt', 'w') as fout:
         fout.writelines(reversed(f.readlines()))
-
     os.remove('queue_.txt')
 
 #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#(CHECKING)#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
@@ -72,15 +71,15 @@ localizecookies = '''+str(vlocalizecookies)+'''
 onlymainsub='''+str(onlymainsub)+'''
 
 '''
-    open('.\\settings.ini', 'w').write(dsettings.encode('utf-8'))
+    open('./settings.ini', 'w').write(dsettings.encode('utf-8'))
 
-if not os.path.exists(".\\settings.ini"):
+if not os.path.exists("./settings.ini"):
     defaultsettings(iquality, ilang1, ilang2, iforcesub, iforceusa, ilocalizecookies, ionlymainsub)
-	
-if not os.path.exists(".\\cookies"):
+  
+if not os.path.exists("./cookies"):
     if raw_input(u'Do you have an account [Y/N]?').lower() == 'y':
         username = raw_input(u'Username: ')
-        password = getpass(u'Password: ')
+        password = getpass('Password(don\'t worry the password are typing but hidden:')
         login.login(username, password)
     else:
         login.login('', '')
@@ -97,7 +96,7 @@ parser.add_argument("-en","--episode-number", metavar='#', type=int, nargs = 1, 
 parser.add_argument("-l","--login", metavar=('Username','Password'), nargs = 2, help="Crunchyroll login: -l User password. if your password has a blank, use double quotation marks (\"). Example: \"This is a password.\"")
 parser.add_argument("-g","--guest", action='store_true', help="Crunchyroll login as guest")
 parser.add_argument("-s","--subs-only", action='store_true', help="Download Crunchyroll Anime Subtitle only. if you get an error, try using double quotation marks (\")")
-parser.add_argument("-q","--queue", type=str, nargs = '?', metavar='Queue Directory', const='.\\queue.txt', help="Run List of Crunchyroll Anime Link in queue file")
+parser.add_argument("-q","--queue", type=str, nargs = '?', metavar='Queue Directory', const='./queue.txt', help="Run List of Crunchyroll Anime Link in queue file")
 parser.add_argument("-d","--debug", action='store_true', help="Run crunchy-xml-decoder in Debug Mode")
 parser.add_argument("-ds","--default-settings", action='store_true', help="Restore default settings")
 arg = parser.parse_args()
@@ -106,7 +105,7 @@ sys.argv=[]
 def queueu(queuepath):
     if not os.path.exists(queuepath):
         open(queuepath, 'w').write(u'#the any line that has hash before the link will be skiped\n')
-        subprocess.call('notepad.exe '+queuepath)
+        subprocess.call('gedit'+queuepath)
     lines = open(queuepath).readlines()
     for line in lines:
         if line.rstrip('\n') ==''.join(line.rstrip('\n').split('#', 1)):
@@ -205,10 +204,10 @@ def settings_():
     slang1, slang2, sforcesub, sforceusa, slocalizecookies, vquality, vonlymainsub = altfuncs.config()
     slang1 = {u'Español (Espana)' : 'Espanol_Espana', u'Français (France)' : 'Francais', u'Português (Brasil)' : 'Portugues',
             u'English' : 'English', u'Español' : 'Espanol', u'Türkçe' : 'Turkce', u'Italiano' : 'Italiano',
-            u'العربية' : 'Arabic', u'Deutsch' : 'Deutsch'}[slang1]
+            u'\u0627\u0644\u0639\u0631\u0628\u064a\u0629' : 'Arabic', u'Deutsch' : 'Deutsch'}[slang1]
     slang2 = {u'Español (Espana)' : 'Espanol_Espana', u'Français (France)' : 'Francais', u'Português (Brasil)' : 'Portugues',
             u'English' : 'English', u'Español' : 'Espanol', u'Türkçe' : 'Turkce', u'Italiano' : 'Italiano',
-            u'العربية' : 'Arabic', u'Deutsch' : 'Deutsch'}[slang2]
+            u'\u0627\u0644\u0639\u0631\u0628\u064a\u0629' : 'Arabic', u'Deutsch' : 'Deutsch'}[slang2]
     if slang1 == 'Espanol_Espana':
         slang1_ = 'Espanol (Espana)'
     else:
@@ -223,10 +222,10 @@ def settings_():
 1.- Video Quality = '''+vquality+'''
 2.- Primary Language = '''+slang1_+'''
 3.- Secondary Language = '''+slang2_+'''
-4.- Force Subtitle = '''+str(sforcesub)+'''		#Use --forced-track in Subtitle
-5.- USA Proxy = '''+str(sforceusa)+'''			#use a US session ID
-6.- Localize cookies = '''+str(slocalizecookies)+'''		#Localize the cookies (Experiment)
-7.- Only One Subtitle = '''+str(vonlymainsub)+'''		#Only download Primary Language
+4.- Force Subtitle = '''+str(sforcesub)+'''   #Use --forced-track in Subtitle
+5.- USA Proxy = '''+str(sforceusa)+'''      #use a US session ID
+6.- Localize cookies = '''+str(slocalizecookies)+'''    #Localize the cookies (Experiment)
+7.- Only One Subtitle = '''+str(vonlymainsub)+'''   #Only download Primary Language
 8.- Restore Default Settings
 '''
     try:
@@ -287,13 +286,13 @@ def makechoise():
     seleccion = 0
     print '''Options:
 0.- Exit
-1.- Download Anime 
-2.- Download Subtitle only
-3.- Login
-4.- Login As Guest
-5.- Run Queue
-6.- Settings
-7.- autocatch and download Queue list
+1.- Download d'un episode
+2.- Download des sous-tire
+3.- Seconnecter avec son compte
+4.- Se connecter en invite
+5.- demarer une liste manuelle
+6.- Paramettre
+7.- Auto recuperation des liens et lancement
 '''
     try:
         seleccion = int(input("> "))
@@ -320,13 +319,14 @@ def makechoise():
         login.login('', '')
         makechoise()
     elif seleccion == 5 :
-	queueu('.\\queue.txt')
+         queueu('./queue.txt')
+         makechoice()
     elif seleccion == 6 :
         settings_()
         makechoise()
     elif seleccion == 7 :
         autocatch()
-        queueu('.\\queue.txt')
+        queueu('./queue.txt')
     elif seleccion == 8 :
         import debug
     elif seleccion == 0 :
