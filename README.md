@@ -12,21 +12,19 @@ that have been automated with a batch file.
 INSTRUCTIONS:
 
     Pre-Setup (Only need to do these once.):
-    1.  Install Python 2.7.5.
-    2.  Install RTMPDUMP
-    3.  Install Mkvtoolnix
-    4.  Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py to generate necessary files (settings.ini and cookies)
-    5.  choices	from the option 
+    1.  Install Python 2.7.5. (sudo apt-get install libxml2-dev libxslt1-dev python-dev )
+    2.  Install lxml (sudo apt-get install python-lxml or sudo easy_install lxml )
+    3.  Install PyCrypto ( sudo easy_install pycrypto-2.6.1 )
+    4.  Install RTMPDUMP ( sudo apt-get install rtmpdump )
+    5.  Install Mkvtoolnix ( sudo apt-get install mkvtollnix )
+    6.  Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py to generate necessary files (settings.ini and cookies)
+    7.  choices	from the option 
 
     Per-Video Process:
     1.  Copy the URL of the CrunchyRoll video you want to download from your web browser
     2.  Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py choice 1 and paste link
     8.  Download will start automatically. Everything is automated.
     11. Browse to the 'export' folder to view the completed file.
-
-    SPECIAL NOTE: There is another batch file in the _run folder..
-        Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py choice 2 and paste link
-            Just want the subtitles to an episode? OK.. fair 'nuff. Use this.
 
 
 WHAT IS THE POINT OF THIS SCRIPT? WHAT IS IT ACTUALLY DOING?:
