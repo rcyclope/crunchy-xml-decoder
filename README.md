@@ -16,7 +16,7 @@ INSTRUCTIONS:
     2.  Install lxml (sudo apt-get install python-lxml or sudo easy_install lxml )
     3.  Install PyCrypto ( sudo easy_install pycrypto-2.6.1 )
     4.  Install RTMPDUMP ( sudo apt-get install rtmpdump )
-    5.  Install Mkvtoolnix ( sudo apt-get install mkvtollnix )
+    5.  Install Mkvtoolnix ( sudo apt-get install mkvtoolnix )
     6.  Run crunchy-xml-decoder.bat or crunchy-xml-decoder.py to generate necessary files (settings.ini and cookies)
     7.  choices	from the option 
 
